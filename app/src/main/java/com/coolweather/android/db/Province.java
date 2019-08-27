@@ -3,9 +3,19 @@ package com.coolweather.android.db;
 import org.litepal.crud.LitePalSupport;
 
 public class Province extends LitePalSupport {
-    private int id;
+    private int id;     //实体类具有的id
 
-    private int provinceCode;
+    private int provinceCode;   //省的代号
+
+    private String provinceName;    //省的名字
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
 
     public int getId() {
         return id;

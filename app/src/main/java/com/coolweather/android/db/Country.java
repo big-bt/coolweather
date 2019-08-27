@@ -2,14 +2,14 @@ package com.coolweather.android.db;
 
 import org.litepal.crud.LitePalSupport;
 
-public class Conutry extends LitePalSupport {
-    private int id;
+public class Country extends LitePalSupport {
+    private int id;             //实体类具有的id
 
-    private String countryName;
+    private String countryName;     //县的名字
 
-    private String weatehrId;       //天气对应的id
+    private String weatherId;       //天气的id
 
-    private int cityId;             //城市id
+    private int cityId;             //城市的id
 
     public int getId() {
         return id;
@@ -27,12 +27,12 @@ public class Conutry extends LitePalSupport {
         this.countryName = countryName;
     }
 
-    public String getWeatehrId() {
-        return weatehrId;
+    public String getWeatherId() {
+        return weatherId;
     }
 
-    public void setWeatehrId(String weatehrId) {
-        this.weatehrId = weatehrId;
+    public void setWeatherId(String weatehrId) {
+        this.weatherId = weatherId;
     }
 
     public int getCityId() {
