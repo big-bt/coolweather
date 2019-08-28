@@ -23,29 +23,21 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="b0dbdb31-3b16-47b2-871a-58c1174bfd17">
-        <schema name="main" object-types="dataset trigger, index, table, column, constraint" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="b0dbdb31-3b16-47b2-871a-58c1174bfd17">
-      <console name="Connection" type="STANDARD" schema="main" session="Main" />
+    <connection id="d9269507-31d7-4b23-99a6-3b00181966f0">
+      <console name="Connection 1" type="STANDARD" schema="main" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="b0dbdb31-3b16-47b2-871a-58c1174bfd17" object-ref="schemas/main/tables/province" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="b0dbdb31-3b16-47b2-871a-58c1174bfd17" />
+    <connection id="d9269507-31d7-4b23-99a6-3b00181966f0" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="b0dbdb31-3b16-47b2-871a-58c1174bfd17" dataset="main.province" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="b0dbdb31-3b16-47b2-871a-58c1174bfd17" dataset="main.android_metadata" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="b0dbdb31-3b16-47b2-871a-58c1174bfd17" dataset="main.city" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="d9269507-31d7-4b23-99a6-3b00181966f0" dataset="main.country" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -70,9 +62,9 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="b0dbdb31-3b16-47b2-871a-58c1174bfd17" active="true">
+      <connection id="d9269507-31d7-4b23-99a6-3b00181966f0" active="true">
         <database>
-          <name value="Connection" />
+          <name value="Connection 1" />
           <description value="" />
           <database-type value="SQLITE" />
           <config-type value="BASIC" />
@@ -85,7 +77,7 @@
           <port value="1234" />
           <database value="database" />
           <files>
-            <file path="C:\Users\30639\Desktop\cool_weather.db" schema="main" />
+            <file path="E:\cool_weather.db" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />

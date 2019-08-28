@@ -1,6 +1,7 @@
 package com.coolweather.android;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.coolweather.android.db.City;
-import com.coolweather.android.db.Country;
+import com.coolweather.android.db.County;
 import com.coolweather.android.db.Province;
 import com.coolweather.android.util.HttpUtil;
 import com.coolweather.android.util.Utility;
@@ -35,7 +36,7 @@ import okhttp3.Response;
 public class ChooseAreaFragment extends Fragment {
     public static final int LEVEL_PROVINCE = 0;
     public static final int LEVEL_CITY = 1;
-    public static final int LEVEL_COUNTRY = 2;
+    public static final int LEVEL_COUNTY = 2;
 
     private TextView titleText;
     private Button backButton;
@@ -48,7 +49,7 @@ public class ChooseAreaFragment extends Fragment {
     //各级列表
     private List<Province> provinceList;
     private List<City> cityList;
-    private List<Country> countryList;
+    private List<County> countyList;
 
     //选中
     private Province selectedProvince;
@@ -92,6 +93,14 @@ public class ChooseAreaFragment extends Fragment {
                     selectedCity = cityList.get(position);
                     //切换到相应的county界面
                     queryCounties();
+                }else if (currentLevel == LEVEL_COUNTY) {
+                    //记住选择的county，获取weatherId
+                    String weatherId = countyList.get(position).getWeatherId();
+                    //选择界面跳转WeatherActivity，并传递天气id
+                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                    intent.putExtra("weather_id",weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
@@ -101,7 +110,7 @@ public class ChooseAreaFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //若在county切换到City
-                if (currentLevel == LEVEL_COUNTRY){
+                if (currentLevel == LEVEL_COUNTY){
                     queryCities();
                 }else if (currentLevel == LEVEL_CITY){
                     //若在county切换到City
@@ -135,7 +144,7 @@ public class ChooseAreaFragment extends Fragment {
         }else {
             //从服务器查询数据
             String address  = "http://guolin.tech/api/china";
-            queryFromServer(address,"Province");
+            queryFromServer(address,"province");
         }
     }
 
@@ -148,7 +157,7 @@ public class ChooseAreaFragment extends Fragment {
         cityList = LitePal.where("provinceid=?",String.valueOf(selectedProvince.getId()))
         .find(City.class);
         if (cityList.size() > 0){
-            cityList.clear();
+            dataList.clear();
             for (City city : cityList){
                 dataList.add(city.getCityName());
             }
@@ -168,21 +177,21 @@ public class ChooseAreaFragment extends Fragment {
     private void queryCounties(){
         titleText.setText(selectedCity.getCityName());
         backButton.setVisibility(View.VISIBLE);
-        countryList = LitePal.where("cityid = ?", String.valueOf(selectedCity.getId()))
-                .find(Country.class);
-        if (countryList.size() > 0){
+        countyList = LitePal.where("cityid = ?", String.valueOf(selectedCity.getId()))
+                .find(County.class);
+        if (countyList.size() > 0){
             dataList.clear();
-            for (Country country :countryList){
-                dataList.add(country.getCountryName());
+            for (County county :countyList){
+                dataList.add(county.getCountyName());
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
-            currentLevel = LEVEL_COUNTRY;
+            currentLevel = LEVEL_COUNTY;
         }else{
             int provinceCode = selectedProvince.getProvinceCode();
-            int countryCode = selectedCity.getCityCode();
-            String address = "http://guolin.tech/api/china" + provinceCode + "/" +countryCode;
-            queryFromServer(address, "country");
+            int cityCode = selectedCity.getCityCode();
+            String address = "http://guolin.tech/api/china/" + provinceCode + "/" +cityCode;
+            queryFromServer(address, "county");
         }
     }
 
@@ -213,8 +222,8 @@ public class ChooseAreaFragment extends Fragment {
                     result = Utility.handleProvinceResponse(responseText);
                 }else if (type.equals("city")){
                     result = Utility.handleCityResponse(responseText, selectedProvince.getId());
-                }else if (type.equals("country")){
-                    result = Utility.handleCityResponse(responseText, selectedCity.getId());
+                }else if (type.equals("county")){
+                    result = Utility.handleCountyResponse(responseText, selectedCity.getId());
                 }
                 if (result){
                     getActivity().runOnUiThread(new Runnable() {
@@ -225,7 +234,7 @@ public class ChooseAreaFragment extends Fragment {
                                 queryProvinces();
                             }else if (type.equals("city")){
                                 queryCities();
-                            }else if (type.equals("country")){
+                            }else if (type.equals("county")){
                                 queryCounties();
                             }
                         }
